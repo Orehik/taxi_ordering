@@ -1,4 +1,17 @@
-.map {
-  width: 800px;
-  height: 400px;
+.parent{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
+.orderBlock{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cardBlock {
+  display: flex;
+  justify-content: center;
+}
+
