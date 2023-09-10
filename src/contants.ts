@@ -1,3 +1,5 @@
+import { ITaxiItem } from "./types/type";
+
 export const COLOR_NAME = {
   "синий": "#071ff7",
   "белый": "#ffffff",
@@ -5,7 +7,7 @@ export const COLOR_NAME = {
   "василек": "#6D81B3"
 }
 
-export const TAXI_LIST = [
+export const TAXI_LIST: ITaxiItem[] = [
   {
     crew_id:1,
     car_mark:"Chevrolet",
@@ -29,8 +31,8 @@ export const TAXI_LIST = [
     lon:53.20390416925046,
     distance:600
   }, {
-    crew_id:123,
-    car_mark:"Deu",
+    crew_id:3,
+    car_mark:"Daewoo",
     car_model:"Nexia",
     car_color:"песок",
     car_number:"О134ДУ",
@@ -40,8 +42,8 @@ export const TAXI_LIST = [
     lon:53.21484758203123,
     distance:400
   }, {
-    crew_id:123,
-    car_mark:"Deu",
+    crew_id:4,
+    car_mark:"Daewoo",
     car_model:"Nexia",
     car_color:"василек",
     car_number:"Д228ОТ",

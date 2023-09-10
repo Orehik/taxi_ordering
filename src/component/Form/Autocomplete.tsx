@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AutoComplete } from "antd";
 import debounce from "lodash/debounce";
 import axios from "axios";
-import {setInputValueAC, setCenterAC, setPositionAC} from "../../redux/actions/reduserAC";
+import {setInputValueAC, setCenterAC, setPositionAC} from "../../redux/actions/reducerAC";
 import formStyle from "./Autocomplete.module.scss"
 import { selectInputValue } from "../../redux/selectors/mapState";
 import { TCoords } from "../../types/type";

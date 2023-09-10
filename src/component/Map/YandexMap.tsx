@@ -1,13 +1,15 @@
 import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setInputValueAC, setPositionAC } from "../../redux/actions/reduserAC";
+import { setInputValueAC, setPositionAC } from "../../redux/actions/reducerAC";
 import { Map, Placemark, YMaps } from "@pbe/react-yandex-maps";
 import mapStyle from "./Map.module.scss";
 import { selectCenter, selectPosition } from "../../redux/selectors/mapState";
+import { selectTaxiList } from "../../redux/selectors/taxi";
 
 const YandexMap = () => {
   const center = useSelector(selectCenter)
   const position = useSelector(selectPosition)
+  const taxiList = useSelector(selectTaxiList)
   const dispatch = useDispatch();
   const mapRef = useRef<unknown>(null);
 
@@ -42,6 +44,7 @@ const YandexMap = () => {
         }}
       >
         { position && <Placemark geometry={position} options={{preset: 'islands#yellowDotIcon'}}/> }
+        {taxiList.map(({lat, lon, crew_id}) => <Placemark key={crew_id} geometry={[lat, lon]} options={{preset: 'islands#greenDotIcon'}}/>)}
       </Map>
     </YMaps>
   );
