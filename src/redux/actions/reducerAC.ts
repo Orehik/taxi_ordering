@@ -15,7 +15,7 @@ export const setInputValueAC = (inputValue: string): ISetInputValueAction => {
   };
 };
 
-export const setPositionAC = (coords: TCoords): ISetPositionAction => {
+export const setPositionAC = (coords: TCoords | null): ISetPositionAction => {
   return {
     type: POSITION,
     payload: coords

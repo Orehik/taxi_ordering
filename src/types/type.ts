@@ -9,7 +9,7 @@ export interface ISetInputValueAction {
 
 export interface ISetPositionAction {
   type: typeof POSITION,
-  payload: TCoords,
+  payload: TCoords | null,
 }
 
 export interface ISetCenterAction {

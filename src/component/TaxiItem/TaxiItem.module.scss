@@ -1,0 +1,24 @@
+.parent {
+  width: 250px;
+  box-sizing: border-box;
+  border: 2px solid black;
+  margin-bottom: 5px;
+  border-radius: 4px;
+}
+
+.brand {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.color {
+  height: 40px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.iconShadow{
+  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.7));
+}

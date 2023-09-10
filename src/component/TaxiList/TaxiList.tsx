@@ -9,7 +9,7 @@ import { ITaxiItem } from "../../types/type";
 
 const TaxiList = () => {
   const dispatch = useDispatch();
-  const taxiList = useSelector(selectTaxiList)
+  const taxiList = useSelector(selectTaxiList);
 
   useEffect(() => {
     dispatch(setTaxiAC([...TAXI_LIST].sort((a: ITaxiItem, b: ITaxiItem) => a.distance - b.distance)))

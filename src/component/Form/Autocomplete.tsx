@@ -14,12 +14,18 @@ interface IOption {
   key: number,
 }
 
-const Autocomplete = () => {
+interface IProps {
+  errorOrder: boolean,
+  setErrorOrder: (state: boolean) => void,
+}
+
+const Autocomplete = ({errorOrder, setErrorOrder}: IProps) => {
   const [options, setOptions] = useState<IOption[]>([]);
   const dispatch = useDispatch();
   const inputValue = useSelector(selectInputValue);
 
   const handleSearch = (value) => {
+    if (!value) return
     debouncedSearch(value);
   };
 
@@ -41,21 +47,32 @@ const Autocomplete = () => {
 
   const debouncedSearch = debounce(search, 300);
   return (
-    <AutoComplete
-      value={inputValue}
-      className={formStyle.input}
-      options={options}
-      onSearch={handleSearch}
-      placeholder='Введите адрес'
-      onSelect={(value, { coords }: IOption) => {
-        dispatch(setCenterAC(coords))
-        dispatch(setPositionAC(coords))
-        dispatch(setInputValueAC(value))
-      }}
-      onChange={(event) => {
-        dispatch(setInputValueAC(event))
-      }}
-    />
+    <div className={formStyle.parent}>
+      <AutoComplete
+        allowClear={true}
+        onClear={() => {
+          dispatch(setPositionAC(null))
+          dispatch(setInputValueAC(''))
+          setErrorOrder(false)
+        }}
+        value={inputValue}
+        status={errorOrder ? 'error' : undefined}
+        className={formStyle.input}
+        options={options}
+        onSearch={handleSearch}
+        placeholder='Введите адрес'
+        onSelect={(value, { coords }: IOption) => {
+          dispatch(setCenterAC(coords))
+          dispatch(setPositionAC(coords))
+          dispatch(setInputValueAC(value))
+          setErrorOrder(false)
+        }}
+        onChange={(event) => {
+          dispatch(setInputValueAC(event))
+        }}
+      />
+      {errorOrder && <span className={formStyle.error}>Некорректный адрес</span>}
+    </div>
   );
 }
 

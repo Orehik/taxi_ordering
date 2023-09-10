@@ -6,7 +6,11 @@ import mapStyle from "./Map.module.scss";
 import { selectCenter, selectPosition } from "../../redux/selectors/mapState";
 import { selectTaxiList } from "../../redux/selectors/taxi";
 
-const YandexMap = () => {
+interface IProps {
+  setErrorOrder: (state: boolean) => void,
+}
+
+const YandexMap = ({setErrorOrder}: IProps) => {
   const center = useSelector(selectCenter)
   const position = useSelector(selectPosition)
   const taxiList = useSelector(selectTaxiList)
@@ -36,8 +40,12 @@ const YandexMap = () => {
               .join(", ");
             dispatch(setInputValueAC(newAddress));
             dispatch(setPositionAC(coords))
+            setErrorOrder(false)
           })
-            .catch((error) => console.log(error))
+            .catch((error) => {
+              setErrorOrder(true)
+              console.log(error)
+            })
         }}
         onLoad={(event) => {
           mapRef.current = event

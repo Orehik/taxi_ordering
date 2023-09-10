@@ -3,8 +3,8 @@ import { SVGAttributes } from "react";
 
 const CarIcon = (props: SVGAttributes<SVGElement>) => (
   <svg
-    height={70}
-    width={70}
+    height={50}
+    width={50}
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 460.384 460.384"
     xmlSpace="preserve"
