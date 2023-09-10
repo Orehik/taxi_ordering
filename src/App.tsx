@@ -1,16 +1,17 @@
-import { YMaps, Map } from "react-yandex-maps";
-import mapStile from "./App.module.scss"
-import Form from './Form'
+import Autocomplete from "./component/Form/Autocomplete";
+import YandexMap from "./component/Map/YandexMap"
+import TaxiList from "./component/TaxiList/TaxiList";
 
 function App() {
 
   return (
-    <YMaps query={{ apikey: import.meta.env.VITE_YA_MAPS_API_KEY }}>
-        <Form />
-        <Map className={mapStile.map} defaultState={{ center: [55.75, 37.57], zoom: 11 }} />
-    </YMaps>
-
+    <>
+    <h1>Детали заказа</h1>
+      <div>Откуда <Autocomplete /></div>
+      <YandexMap />
+      <TaxiList/>
+    </>
 )
 }
 
-export default App
+export default App;
