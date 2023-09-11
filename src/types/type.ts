@@ -22,7 +22,7 @@ export interface ISetPositionAction {
 
 export interface ISetCenterAction {
   type: typeof CENTER,
-  payload: TCoords
+  payload: TCoords,
 }
 
 export interface IGetTaxiAction {
@@ -57,6 +57,6 @@ export interface ITaxiItem {
   driver_phone: string,
   lat: number,
   lon: number,
-  distance: number
+  distance: number,
 }
 

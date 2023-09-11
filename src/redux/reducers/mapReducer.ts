@@ -1,5 +1,5 @@
 import { SET_INPUT_VALUE, POSITION, CENTER } from "../actions/actionTypes";
-import {TActions, TCoords} from "../../types/type";
+import { TActions, TCoords } from "../../types/type";
 
 export interface IMapState {
   inputValue: string,

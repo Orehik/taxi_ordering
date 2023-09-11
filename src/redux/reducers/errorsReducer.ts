@@ -11,7 +11,7 @@ const initialTaxiState: IErrorState = {
   addressError: false,
 };
 
-export const errorReducer = (state = initialTaxiState, action: TActions): IErrorState  => {
+export const errorReducer = (state = initialTaxiState, action: TActions): IErrorState => {
   switch (action.type) {
     case SET_TAXI_ERROR :
       return { ...state, taxiError: action.payload }

@@ -1,12 +1,13 @@
 import React from "react"
-import { ITaxiItem } from "../../types/type"
-import CarIcon from "../CarIcon";
-import itemStyle from "./TaxiItem.module.scss"
-import cn from "classnames"
-import { COLOR_NAME } from "../../contants";
 import { useDispatch, useSelector } from "react-redux";
+import cn from "classnames"
+
+import CarIcon from "../CarIcon";
 import { selectTaxiAC } from "../../redux/actions/reducerAC";
 import { selectPosition } from "../../redux/selectors/mapState";
+import { ITaxiItem } from "../../types/type"
+import { COLOR_NAME } from "../../contants";
+import itemStyle from "./TaxiItem.module.scss"
 
 interface IProps extends ITaxiItem {
   hex_color: string,
@@ -19,7 +20,7 @@ const TaxiItem = ({car_mark, car_model, car_color, distance, car_number, hex_col
   const dispatch = useDispatch();
 
   const receivingTheCrew = () => {
-    dispatch(selectTaxiAC(crew_id))
+    dispatch(selectTaxiAC(crew_id));
   }
 
   return (
@@ -33,9 +34,7 @@ const TaxiItem = ({car_mark, car_model, car_color, distance, car_number, hex_col
         <p>{car_mark + ' ' + car_model}</p>
       </div>
       <div className={itemStyle.color}>
-        {is_suitable_crew && position &&
-          <p>Ближайший экипаж</p>
-        }
+        {is_suitable_crew && position && <p>Ближайший экипаж</p>}
         <p>{car_color}</p>
         {!is_side_menu ? <p>{car_number}</p> : <p>{distance + ' м'}</p>}
       </div>
