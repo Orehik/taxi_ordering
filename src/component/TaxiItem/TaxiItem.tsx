@@ -15,6 +15,10 @@ interface IProps extends ITaxiItem {
   is_side_menu?: boolean,
 }
 
+const prettifyDistance = (distance: number): string => {
+  return (distance * 1000).toFixed(0)
+}
+
 const TaxiItem = ({car_mark, car_model, car_color, distance, car_number, hex_color, is_suitable_crew, crew_id, is_side_menu}: IProps) => {
   const position = useSelector(selectPosition);
   const dispatch = useDispatch();
@@ -36,7 +40,7 @@ const TaxiItem = ({car_mark, car_model, car_color, distance, car_number, hex_col
       <div className={itemStyle.color}>
         {is_suitable_crew && position && <p>Ближайший экипаж</p>}
         <p>{car_color}</p>
-        {!is_side_menu ? <p>{car_number}</p> : <p>{distance + ' м'}</p>}
+        {is_side_menu && distance ? <p>{prettifyDistance(distance) + ' м'}</p> : <p>{car_number}</p>}
       </div>
     </div>
   );
