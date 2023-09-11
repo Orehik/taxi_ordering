@@ -1,16 +1,12 @@
 import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setInputValueAC, setPositionAC } from "../../redux/actions/reducerAC";
+import { setAddressErrorAC, setInputValueAC, setPositionAC } from "../../redux/actions/reducerAC";
 import { Map, Placemark, YMaps } from "@pbe/react-yandex-maps";
 import mapStyle from "./Map.module.scss";
 import { selectCenter, selectPosition } from "../../redux/selectors/mapState";
 import { selectTaxiList } from "../../redux/selectors/taxi";
 
-interface IProps {
-  setErrorOrder: (state: boolean) => void,
-}
-
-const YandexMap = ({setErrorOrder}: IProps) => {
+const YandexMap = () => {
   const center = useSelector(selectCenter)
   const position = useSelector(selectPosition)
   const taxiList = useSelector(selectTaxiList)
@@ -38,12 +34,12 @@ const YandexMap = ({setErrorOrder}: IProps) => {
             ]
               .filter(Boolean)
               .join(", ");
+            dispatch(setAddressErrorAC(false))
             dispatch(setInputValueAC(newAddress));
             dispatch(setPositionAC(coords))
-            setErrorOrder(false)
           })
             .catch((error) => {
-              setErrorOrder(true)
+              dispatch(setAddressErrorAC(true))
               console.log(error)
             })
         }}
@@ -51,8 +47,8 @@ const YandexMap = ({setErrorOrder}: IProps) => {
           mapRef.current = event
         }}
       >
-        { position && <Placemark geometry={position} options={{preset: 'islands#yellowDotIcon'}}/> }
-        {taxiList.map(({lat, lon, crew_id}) => <Placemark key={crew_id} geometry={[lat, lon]} options={{preset: 'islands#greenDotIcon'}}/>)}
+        {position && <Placemark geometry={position} options={{preset: 'islands#yellowDotIcon'}}/>}
+        {taxiList?.map(({lat, lon, crew_id}) => <Placemark key={crew_id} geometry={[lat, lon]} options={{preset: 'islands#greenDotIcon'}}/>)}
       </Map>
     </YMaps>
   );

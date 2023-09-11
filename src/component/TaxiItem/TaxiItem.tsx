@@ -5,17 +5,16 @@ import itemStyle from "./TaxiItem.module.scss"
 import cn from "classnames"
 import { COLOR_NAME } from "../../contants";
 import { useDispatch, useSelector } from "react-redux";
-import { getSelectedTaxi } from "../../redux/selectors/taxi";
 import { selectTaxiAC } from "../../redux/actions/reducerAC";
 import { selectPosition } from "../../redux/selectors/mapState";
 
 interface IProps extends ITaxiItem {
   hex_color: string,
   is_suitable_crew?: boolean,
+  is_side_menu?: boolean,
 }
 
-const TaxiItem = ({car_mark, car_model, car_color, distance, car_number, hex_color, is_suitable_crew, crew_id}: IProps) => {
-  const selectedTaxi = useSelector(getSelectedTaxi);
+const TaxiItem = ({car_mark, car_model, car_color, distance, car_number, hex_color, is_suitable_crew, crew_id, is_side_menu}: IProps) => {
   const position = useSelector(selectPosition);
   const dispatch = useDispatch();
 
@@ -24,7 +23,7 @@ const TaxiItem = ({car_mark, car_model, car_color, distance, car_number, hex_col
   }
 
   return (
-    <div className={cn(itemStyle.parent)} onClick={() => receivingTheCrew()}>
+    <div className={itemStyle.parent} onClick={() => receivingTheCrew()}>
       <span className={cn(itemStyle.button_line, itemStyle.button_line_top)}/>
       <span className={cn(itemStyle.button_line, itemStyle.button_line_right)}/>
       <span className={cn(itemStyle.button_line, itemStyle.button_line_bottom)}/>
@@ -38,7 +37,7 @@ const TaxiItem = ({car_mark, car_model, car_color, distance, car_number, hex_col
           <p>Ближайший экипаж</p>
         }
         <p>{car_color}</p>
-        {is_suitable_crew ? <p>{car_number}</p> : <p>{distance + ' м'}</p>}
+        {!is_side_menu ? <p>{car_number}</p> : <p>{distance + ' м'}</p>}
       </div>
     </div>
   );

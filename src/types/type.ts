@@ -1,6 +1,14 @@
-import {ADD_TAXI, CENTER, POSITION, SELECT_TAXI, SET_INPUT_VALUE} from "../redux/actions/actionTypes";
+import {
+  ADD_TAXI,
+  CENTER,
+  POSITION,
+  SELECT_TAXI,
+  SET_ADDRESS_ERROR,
+  SET_INPUT_VALUE,
+  SET_TAXI_ERROR
+} from "../redux/actions/actionTypes";
 
-export type TCoords = [number, number];
+export type TCoords = [number, number] | null;
 
 export interface ISetInputValueAction {
   type: typeof SET_INPUT_VALUE,
@@ -27,7 +35,17 @@ export interface ISelectTaxiAction {
   payload: number | null,
 }
 
-export type TActions = ISetPositionAction | ISetCenterAction | IGetTaxiAction | ISetInputValueAction | ISelectTaxiAction
+export interface ISetTaxiErrorAction {
+  type: typeof SET_TAXI_ERROR,
+  payload: boolean,
+}
+
+export interface ISetAddressErrorAction {
+  type: typeof SET_ADDRESS_ERROR,
+  payload: boolean,
+}
+
+export type TActions = ISetPositionAction | ISetCenterAction | IGetTaxiAction | ISetInputValueAction | ISelectTaxiAction | ISetTaxiErrorAction | ISetAddressErrorAction
 
 export interface ITaxiItem {
   crew_id: number,

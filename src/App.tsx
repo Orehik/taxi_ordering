@@ -5,15 +5,15 @@ import divStyle from "./App.module.scss"
 import OrderButton from "./component/Button/OrderButton";
 import TaxiItem from "./component/TaxiItem/TaxiItem";
 import { useSelector } from "react-redux";
-import { selectTaxiList } from "./redux/selectors/taxi";
+import {getSelectedTaxi, selectTaxiList} from "./redux/selectors/taxi";
 import { selectPosition } from "./redux/selectors/mapState";
-import { useState } from "react";
-import {ITaxiItem} from "./types/type";
+import { COLOR_NAME } from "./contants";
 
 function App() {
-    const [errorOrder, setErrorOrder] = useState<boolean>(false)
-    const taxiList = useSelector(selectTaxiList);
-    const position = useSelector(selectPosition);
+  const taxiList = useSelector(selectTaxiList);
+  const position = useSelector(selectPosition);
+  const selectedTaxi = useSelector(getSelectedTaxi);
+  const taxiInfo = taxiList?.find((item) => item.crew_id === selectedTaxi);
 
   return (
     <div className={divStyle.parent}>
@@ -21,21 +21,21 @@ function App() {
         <h1>Детали заказа</h1>
         <div>Откуда
         </div>
-          <Autocomplete errorOrder={errorOrder} setErrorOrder={setErrorOrder}/>
-        {position &&
+          <Autocomplete />
+        {selectedTaxi && position &&
           <>
         <p>Выбранный экипаж</p>
         <div className={divStyle.item}>
-          <TaxiItem {...taxiList[0]} is_suitable_crew={true}/>
+          <TaxiItem {...taxiInfo} hex_color={COLOR_NAME[taxiInfo?.car_color] ?? COLOR_NAME["белый"]}/>
         </div>
           </>
         }
       </div>
       <div className={divStyle.cardBlock}>
-        <YandexMap setErrorOrder={setErrorOrder} />
-        <TaxiList/>
+        <YandexMap />
+        {position && <TaxiList />}
       </div>
-      <OrderButton setErrorOrder={setErrorOrder}/>
+      <OrderButton />
     </div>
 )
 }

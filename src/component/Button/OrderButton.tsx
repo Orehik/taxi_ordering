@@ -1,13 +1,10 @@
 import { Button, Space } from "antd";
 import buttonStyle from "./OrderButton.module.scss"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectInputValue, selectPosition } from "../../redux/selectors/mapState";
 import { TCoords } from "../../types/type";
 import { getSelectedTaxi } from "../../redux/selectors/taxi";
-
-interface IProps {
-  setErrorOrder: (state: boolean) => void,
-}
+import { setAddressErrorAC, setTaxiErrorAC } from "../../redux/actions/reducerAC";
 
 interface IAddress {
   address: string,
@@ -21,10 +18,11 @@ type TAnswers = {
   crew_id: number | null,
 }
 
-const OrderButton = ({setErrorOrder}: IProps) => {
+const OrderButton = () => {
+  const dispatch = useDispatch();
   const position = useSelector(selectPosition);
   const inputValue = useSelector(selectInputValue);
-  const selectedTaxi = useSelector(getSelectedTaxi)
+  const selectedTaxi = useSelector(getSelectedTaxi);
 
   const answer = (coords: TCoords): TAnswers  => {
     return {
@@ -41,8 +39,9 @@ const OrderButton = ({setErrorOrder}: IProps) => {
   return (
     <Space wrap>
       <Button onClick={() => {
-        setErrorOrder(!position)
-        if (position) {
+        dispatch(setTaxiErrorAC(!selectedTaxi))
+        dispatch(setAddressErrorAC(!position))
+        if (position && selectedTaxi) {
           console.log(answer(position))
         }
       }} className={buttonStyle.button}>Заказать</Button>

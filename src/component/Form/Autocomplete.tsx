@@ -3,10 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { AutoComplete } from "antd";
 import debounce from "lodash/debounce";
 import axios from "axios";
-import {setInputValueAC, setCenterAC, setPositionAC} from "../../redux/actions/reducerAC";
+import {
+  setInputValueAC,
+  setCenterAC,
+  setPositionAC,
+  setTaxiAC,
+  selectTaxiAC,
+  setAddressErrorAC, setTaxiErrorAC
+} from "../../redux/actions/reducerAC";
 import formStyle from "./Autocomplete.module.scss"
 import { selectInputValue } from "../../redux/selectors/mapState";
 import { TCoords } from "../../types/type";
+import { selectAddressError } from "../../redux/selectors/errors";
 
 interface IOption {
   value: string,
@@ -14,15 +22,11 @@ interface IOption {
   key: number,
 }
 
-interface IProps {
-  errorOrder: boolean,
-  setErrorOrder: (state: boolean) => void,
-}
-
-const Autocomplete = ({errorOrder, setErrorOrder}: IProps) => {
+const Autocomplete = () => {
   const [options, setOptions] = useState<IOption[]>([]);
   const dispatch = useDispatch();
   const inputValue = useSelector(selectInputValue);
+  const addressError = useSelector(selectAddressError);
 
   const handleSearch = (value) => {
     if (!value) return
@@ -44,34 +48,36 @@ const Autocomplete = ({errorOrder, setErrorOrder}: IProps) => {
       console.error('Ошибка при получении данных:', error);
     }
   };
-
   const debouncedSearch = debounce(search, 300);
   return (
     <div className={formStyle.parent}>
       <AutoComplete
         allowClear={true}
         onClear={() => {
+          dispatch(setAddressErrorAC(false))
+          dispatch(setTaxiErrorAC(false))
           dispatch(setPositionAC(null))
           dispatch(setInputValueAC(''))
-          setErrorOrder(false)
+          dispatch(setTaxiAC([]))
+          dispatch(selectTaxiAC(null))
         }}
         value={inputValue}
-        status={errorOrder ? 'error' : undefined}
+        status={addressError ? 'error' : undefined}
         className={formStyle.input}
         options={options}
         onSearch={handleSearch}
         placeholder='Введите адрес'
         onSelect={(value, { coords }: IOption) => {
+          dispatch(setAddressErrorAC(false))
           dispatch(setCenterAC(coords))
           dispatch(setPositionAC(coords))
           dispatch(setInputValueAC(value))
-          setErrorOrder(false)
         }}
         onChange={(event) => {
           dispatch(setInputValueAC(event))
         }}
       />
-      {errorOrder && <span className={formStyle.error}>Некорректный адрес</span>}
+      {addressError && <span className={formStyle.error}>Некорректный адрес</span>}
     </div>
   );
 }
