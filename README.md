@@ -1,27 +1,74 @@
-# React + TypeScript + Vite
+# Страница заказа такси с формой и картой.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![](images/image.png)
 
-Currently, two official plugins are available:
+## Форма заказа:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+“Откуда” - вводится адрес подачи такси, обязательное поле.
+Формат ввода "Улица, номер дома".
+На карте должен отобразиться желтый маркер в этом месте.
+Если адрес не найден, то поле считается не валидным.
+Также можно заполнить это поле, щелкнув на карте в нужном месте.
+Также при отправке формы передаются поля source_time (время подачи) и crew_id (ИД выбранного экипажа), смотрите описание запроса создания в конце задания.
+Валидация полей происходит после изменения значений полей.
+При щелчке по кнопке "Заказать" происходит полная валидация формы и кнопка становится недоступной пока все ошибки не исправлены.
+Например, если, заполняя поля сразу нажать кнопку "Заказать",
+то под полем "Откуда" появится подсказка, что это поле обязательное.
 
-## Expanding the ESLint configuration
+## Карта:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Предлагается использовать Яндекс-карты (можете взять более удобные вам карты).
+При щелчке на карте
+- ищется адрес выбранного места,
+- заменяется текущее значение поля "Откуда",
+- в месте щелчка появляется желтый маркер,
+- на сервер отправляется запрос поиска подходящих экипажей,
+- найденные экипажи отображаются на карте зелеными маркерами и выводятся в список экипажей отсортированными по возрастанию расстояния до точки подачи.
 
-- Configure the top-level `parserOptions` property like this:
+Первый экипаж из этого списка считается "подходящим" и отображается под формой заказа.
+Если адрес не найден, то в месте щелчка появляется красный маркер с подписью "Адрес не найден".
 
+Получение подходящих экипажей и создание заявки просто мокаем. Реализация должна включать в себя 2 функции:
+
+Пример данных на входе
 ```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+    data: {
+    crews_info: [
+      {
+        crew_id: 123,
+        car_mark: "Chevrolet",
+        car_model: "Lacetti",
+        car_color: "синий",
+        car_number: "Е234КУ",
+        driver_name: "Деточкин",
+        driver_phone: "7788",
+        lat: 56.855532,
+        lon: 53.217462,
+        distance: 300
+      },{
+        crew_id: 125,
+        car_mark: "Hyundai",
+        car_model: "Solaris",
+        car_color: "белый",
+        car_number: "Ф567АС",
+        driver_name: "Петров",
+        driver_phone: "8899",
+        lat: 56.860581,
+        lon: 53.209223,
+        distance: 600
+      }
+    ]
+  }
 ```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Пример данных на выходе:
+```js
+{
+  source_time: "20130101010101",
+    addresses: [
+      {address: "Пушкинская, 144",
+      lat: 56.839439,
+      lon: 53.218803},
+  ],
+    crew_id: 123
+}
+```
