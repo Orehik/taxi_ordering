@@ -1,0 +1,12 @@
+.parent {
+  display: flex;
+  flex-direction: column;
+}
+
+.list{
+  height: 400px;
+  width: 300px;
+  margin-left: 15px;
+  display: flex;
+  flex-direction: column;
+}

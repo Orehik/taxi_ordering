@@ -1,0 +1,15 @@
+.input {
+  width: 300px;
+  margin: 5px 0;
+}
+
+.parent {
+  display: flex;
+  flex-direction: column;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
