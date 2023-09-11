@@ -18,7 +18,6 @@ export const TAXI_LIST: ITaxiItem[] = [
     driver_phone: "7788",
     lat: 56.84343473406359,
     lon: 53.216821687866165,
-    distance: 300,
   }, {
     crew_id: 2,
     car_mark: "Hyundai",
@@ -29,7 +28,6 @@ export const TAXI_LIST: ITaxiItem[] = [
     driver_phone: "8899",
     lat: 56.84804416396406,
     lon: 53.20390416925046,
-    distance: 600,
   }, {
     crew_id: 3,
     car_mark: "Daewoo",
@@ -40,7 +38,6 @@ export const TAXI_LIST: ITaxiItem[] = [
     driver_phone: "3589",
     lat: 56.84223524814054,
     lon: 53.21484758203123,
-    distance: 400,
   }, {
     crew_id: 4,
     car_mark: "Daewoo",
@@ -51,6 +48,5 @@ export const TAXI_LIST: ITaxiItem[] = [
     driver_phone: "3365",
     lat: 56.84381103542013,
     lon: 53.210727708984365,
-    distance: 500,
   },
 ];

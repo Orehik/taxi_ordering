@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AutoComplete } from "antd";
 import debounce from "lodash/debounce";
@@ -50,7 +50,7 @@ const Autocomplete = () => {
     dispatch(setInputValueAC(value));
   }
 
-  const search = async (value) => {
+  const search = useCallback(async (value) => {
     try {
       const response = await axios.get(`https://geocode-maps.yandex.ru/1.x/?apikey=${import.meta.env.VITE_YA_MAPS_API_KEY}&geocode=${value}&format=json`);
       const data = response?.data?.response?.GeoObjectCollection?.featureMember;
@@ -64,9 +64,9 @@ const Autocomplete = () => {
     } catch (error) {
       console.error('Ошибка при получении данных:', error);
     }
-  };
+  }, [])
 
-  const debouncedSearch = debounce(search, 300);
+  const debouncedSearch = useMemo(() => debounce(search, 300), [search])
 
   return (
     <div className={formStyle.parent}>
