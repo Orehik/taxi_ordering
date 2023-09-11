@@ -9,4 +9,4 @@ const rootReducer = () => combineReducers({
   errorState: errorReducer,
 })
 
-export default rootReducer
+export default rootReducer;

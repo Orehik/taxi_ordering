@@ -1,5 +1,5 @@
-import {ITaxiItem, TActions} from "../../types/type";
-import {ADD_TAXI, SELECT_TAXI} from "../actions/actionTypes";
+import { ITaxiItem, TActions } from "../../types/type";
+import { ADD_TAXI, SELECT_TAXI } from "../actions/actionTypes";
 
 export interface ITaxiState {
   taxiList: ITaxiItem[],
@@ -11,7 +11,7 @@ const initialTaxiState: ITaxiState = {
   selectedTaxi: null,
 };
 
-export const taxiReducer = (state = initialTaxiState, action: TActions): ITaxiState  => {
+export const taxiReducer = (state = initialTaxiState, action: TActions): ITaxiState => {
   switch (action.type) {
     case ADD_TAXI :
       return { ...state, taxiList: action.payload }

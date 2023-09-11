@@ -27,7 +27,7 @@ export const setInputValueAC = (inputValue: string): ISetInputValueAction => {
 export const setPositionAC = (coords: TCoords | null): ISetPositionAction => {
   return {
     type: POSITION,
-    payload: coords
+    payload: coords,
   };
 };
 
@@ -48,20 +48,20 @@ export const setTaxiAC = (arrayItem: ITaxiItem[]): IGetTaxiAction => {
 export const selectTaxiAC = (crew_id: number | null): ISelectTaxiAction => {
   return {
     type: SELECT_TAXI,
-    payload: crew_id
+    payload: crew_id,
   }
 }
 
 export const setTaxiErrorAC = (value: boolean): ISetTaxiErrorAction => {
   return {
     type: SET_TAXI_ERROR,
-    payload: value
+    payload: value,
   }
 }
 
 export const setAddressErrorAC = (value: boolean): ISetAddressErrorAction => {
   return {
     type: SET_ADDRESS_ERROR,
-    payload: value
+    payload: value,
   }
 }
