@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { selectTaxiList } from "./redux/selectors/taxi";
 import { selectPosition } from "./redux/selectors/mapState";
 import { useState } from "react";
+import {ITaxiItem} from "./types/type";
 
 function App() {
     const [errorOrder, setErrorOrder] = useState<boolean>(false)
@@ -23,7 +24,7 @@ function App() {
           <Autocomplete errorOrder={errorOrder} setErrorOrder={setErrorOrder}/>
         {position &&
           <>
-        <p>Подходящий экипаж</p>
+        <p>Выбранный экипаж</p>
         <div className={divStyle.item}>
           <TaxiItem {...taxiList[0]} is_suitable_crew={true}/>
         </div>
